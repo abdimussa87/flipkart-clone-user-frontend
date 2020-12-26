@@ -1,0 +1,59 @@
+.subHeader {
+  height: 40px;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+}
+
+.subHeader ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subHeader > ul {
+  display: flex;
+  margin: 0 50px;
+  position: relative;
+}
+
+.subHeader > ul > li > span {
+  display: block;
+  line-height: 40px;
+  cursor: pointer;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+.subHeader > ul > li > span:hover {
+  color: #2874f0;
+}
+
+.subHeader > ul > li > ul {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #cecece;
+  left: 0;
+  right: 0;
+  display: none;
+}
+
+.subHeader > ul > li:hover ul {
+  display: block;
+}
+.subHeader > ul > li > ul > li {
+  margin: 0 20px;
+  min-width: 5rem;
+}
+.subHeader > ul > li > ul > li {
+  float: left;
+}
+.subHeader > ul > li > ul > li > a {
+  font-weight: bold;
+}
+.subHeader > ul > li > ul > li a {
+  padding: 3px 0;
+  display: block;
+  font-size: 12px;
+  text-decoration: none;
+  color: #707070;
+}
