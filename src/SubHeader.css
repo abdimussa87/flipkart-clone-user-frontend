@@ -1,5 +1,5 @@
 .subHeader {
-  height: 40px;
+  height: fit-content;
   background-color: white;
   border-bottom: 1px solid lightgray;
 }
@@ -12,15 +12,15 @@
 
 .subHeader > ul {
   display: flex;
-  margin: 0 50px;
+  margin: 0 4%;
   position: relative;
 }
 
 .subHeader > ul > li > span {
   display: block;
-  line-height: 40px;
+  /* line-height: 25px; */
   cursor: pointer;
-  padding: 0 20px;
+  padding: 0.4rem 15px;
   font-size: 14px;
 }
 
