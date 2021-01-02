@@ -4,8 +4,19 @@ import Header from './Header';
 import SubHeader from './SubHeader';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import ProductPage from './ProductPage';
+import ProductPageOrProductListPage from './ProductContainer/index';
+import { useEffect } from 'react';
+import { fetchCategoriesAsync } from './features/categorySlice';
+import { useDispatch } from 'react-redux'
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    dispatch(fetchCategoriesAsync({}))
+
+  }, [dispatch])
   return (
     <div className="app">
       <Router>
@@ -13,13 +24,12 @@ function App() {
         <SubHeader />
         <Switch>
           <Route path='/' exact component={HomePage} />
-          <Route path='/:slug' component={ProductPage} />
+          <Route path='/:slug' component={ProductPageOrProductListPage} />
 
 
         </Switch>
 
       </Router>
-      {/* <h5>Lets go</h5> */}
     </div>
   );
 }

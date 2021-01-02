@@ -1,0 +1,20 @@
+.productPage {
+  margin: 0.6rem;
+}
+.productPage > h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.productPage__carouselImage {
+  object-fit: contain;
+}
+.productPage__products {
+  display: flex;
+}
+.productPage__product {
+  margin: 0.6rem 0;
+}
+
+.productPage__product > a > img {
+  max-width: 100%;
+}

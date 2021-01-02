@@ -18,32 +18,32 @@ export const fetchCategoriesAsync = createAsyncThunk('category/fetchCategoriesAs
 
 
 
-const buildUpdatedCategoriesList = (categories, newCategory) => {
-  // if what we are adding is itself a parent
-  if (!newCategory.parentId) {
-    return [...categories, {
-      id: newCategory._id,
-      name: newCategory.name, slug: newCategory.slug,
-      children: []
-    }]
-  }
-  let categoryList = []
-  for (let cat of categories) {
-    if (cat.id === newCategory.parentId) {
-      categoryList.push({
-        ...cat, children: buildUpdatedCategoriesList([...cat.children, {
-          id: newCategory._id,
-          name: newCategory.name, slug: newCategory.slug, parentId: newCategory.parentId
-        }], newCategory)
-      })
-    } else {
-      categoryList.push(
-        { ...cat, children: cat.children && cat.children.length > 0 ? buildUpdatedCategoriesList(cat.children, newCategory) : [] }
-      );
-    }
-  }
-  return categoryList;
-}
+// const buildUpdatedCategoriesList = (categories, newCategory) => {
+//   // if what we are adding is itself a parent
+//   if (!newCategory.parentId) {
+//     return [...categories, {
+//       id: newCategory._id,
+//       name: newCategory.name, slug: newCategory.slug,
+//       children: []
+//     }]
+//   }
+//   let categoryList = []
+//   for (let cat of categories) {
+//     if (cat.id === newCategory.parentId) {
+//       categoryList.push({
+//         ...cat, children: buildUpdatedCategoriesList([...cat.children, {
+//           id: newCategory._id,
+//           name: newCategory.name, slug: newCategory.slug, parentId: newCategory.parentId
+//         }], newCategory)
+//       })
+//     } else {
+//       categoryList.push(
+//         { ...cat, children: cat.children && cat.children.length > 0 ? buildUpdatedCategoriesList(cat.children, newCategory) : [] }
+//       );
+//     }
+//   }
+//   return categoryList;
+// }
 
 
 export const categorySlice = createSlice({

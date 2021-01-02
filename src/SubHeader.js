@@ -1,17 +1,9 @@
 import React from 'react'
 import './SubHeader.css'
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchCategoriesAsync } from './features/categorySlice';
+import { useSelector } from 'react-redux'
 function SubHeader() {
     const categories = useSelector(state => state.category.categories)
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-
-        dispatch(fetchCategoriesAsync({}))
-
-    }, [dispatch])
 
     const renderCategories = (categories) => {
         let newCategoryList = []
@@ -20,7 +12,7 @@ function SubHeader() {
                 newCategoryList.push(
                     <li key={cat.name}>
                         {
-                            cat.parentId ? <a href={cat.slug}> {cat.name} </a> : <span>
+                            cat.parentId ? <a href={`/${cat.slug}?cid=${cat.id}&type=${cat.type}`}> {cat.name} </a> : <span>
                                 {cat.name}
                             </span>
                         }
