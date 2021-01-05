@@ -2,4 +2,204 @@
   background-color: #2874f0;
   height: 56px;
   width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header__left {
+  display: flex;
+  align-items: center;
+  flex: 0.7;
+  margin-left: 10%;
+}
+.header__logo {
+  height: 25px;
+  margin-right: 10px;
+}
+.header__search {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 70%;
+  background-color: white;
+}
+.header__search > input {
+  padding: 10px;
+  border: none;
+  width: 80%;
+  background-color: transparent;
+}
+.headerSearch__searchIcon {
+  color: blue;
+  position: absolute;
+  right: 0;
+}
+.header__right {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-right: 10%;
+}
+.headerRight__loginButton {
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+.headerRight__loginButton > button {
+  position: relative;
+  color: #2874f0;
+  background-color: white;
+  font-weight: 600;
+  padding: 8px 35px;
+  border: none;
+  margin-right: 15px;
+}
+.headerRight__loginButton > button:hover {
+  cursor: pointer;
+}
+.headerRight__moreButton {
+  position: relative;
+  display: flex;
+  background-color: transparent;
+  border: none;
+  color: white;
+  align-items: center;
+  margin-right: 15px;
+  padding: 10px;
+}
+.headerRight__cartButton {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  color: white;
+  align-items: center;
+}
+
+.login__list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #cecece;
+  left: -48px;
+  right: 0;
+  top: 35px;
+  display: none;
+  z-index: 999;
+  padding: 10px 0;
+  width: 200%;
+}
+
+.loginList__firstItem {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  padding: 0 10px;
+  padding-bottom: 10px;
+}
+
+.login__list > li {
+  list-style: none;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
+}
+.login__list > li:hover {
+  background-color: #f1f3f6;
+}
+.login__list > li > a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-weight: 300;
+  font-size: 15px;
+  padding: 10px 10px;
+}
+
+.headerRight__loginButton:hover > button > .login__list {
+  display: block;
+}
+
+.moreButton__list {
+  display: none;
+}
+
+.headerRight__moreButton:hover > .moreButton__list {
+  display: block;
+}
+
+.moreButton__list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #cecece;
+  left: -60px;
+  right: 0;
+  top: 41px;
+  display: none;
+  z-index: 999;
+  padding: 2px 0px;
+  width: 250%;
+}
+
+.moreButton__list > li {
+  list-style: none;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
+}
+
+.moreButton__list > li > a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-weight: 300;
+  font-size: 15px;
+  padding: 10px 10px;
+}
+
+.moreButton__list > li:hover {
+  background-color: #f1f3f6;
+}
+
+.loginDialog {
+  display: flex;
+  position: relative;
+}
+.dialogLeft {
+  background-color: #2874f0;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  flex: 0.4;
+}
+.dialogLeftTop {
+  flex: 1;
+}
+.dialogTitle {
+  color: white;
+  font-weight: 700;
+  font-size: 30px;
+  padding: 50px 0 20px 40px;
+}
+.dialogSubTitle {
+  color: white;
+  font-weight: 600;
+  padding: 0 20px 20px 40px;
+}
+.dialogRight {
+  flex: 0.6;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dialogRight__top {
+  padding-top: 20px;
+}
+.dialogCloseIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+}
+.dialogCloseIcon:hover {
+  cursor: pointer;
 }
