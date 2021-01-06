@@ -2,23 +2,32 @@ import React from 'react'
 import './Header.css'
 import logo from "./images/flipkart-logo.png";
 import SearchIcon from '@material-ui/icons/Search';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogContent, TextField } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import loginImage from './images/login_img_c4a81e.png'
 import CloseIcon from '@material-ui/icons/Close';
-import { loginAsync } from './features/userSlice';
+import { loginAsync, logout } from './features/userSlice';
 function Header() {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+
+    useEffect(() => {
+        if (user.authenticated) {
+            setOpen(false);
+        }
+    }, [user.authenticated])
+
+
     const handleClose = () => {
         setOpen(false);
     };
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.user);
+
 
     const handleLogin = () => {
         if (email.trim().length === 0) {
@@ -116,23 +125,48 @@ function Header() {
                 </div>
             </div>
             <div className="header__right">
-                <div className="headerRight__loginButton">
-                    <button onClick={() => setOpen(true)}>Login
-                <ul className='login__list'>
-                            <div className="loginList__firstItem">
+                {user.authenticated
+                    ?
+                    <h5 className='headerRight__user' style={{ display: 'flex', padding: '10px', position: 'relative', alignItems: 'center', color: 'white' }}>
+
+                        {user.user.firstName}<KeyboardArrowDownIcon />
+
+                        <ul className='user__list'>
+                            {/* <div className="loginList__firstItem">
                                 <li style={{ color: 'black' }}>New Customer?</li>
                                 <li> <a href="#1">Signup</a> </li>
-                            </div>
+                            </div> */}
 
                             <li><a href="/profile">My Profile</a> </li>
                             <li> <a href="/flipkart_plus"> Flipkart Plus Zone</a></li>
                             <li> <a href="/orders">Orders</a> </li>
                             <li> <a href="/wishlist"> Wishilist</a></li>
                             <li> <a href="/rewards">Rewards</a> </li>
-                            <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/giftcards">Gift Cards</a> </li>
+                            <li> <a href="/giftcards">Gift Cards</a> </li>
+                            <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/" onClick={(e) => {
+                                e.preventDefault();
+                                dispatch(logout())
+                            }} >Logout</a> </li>
                         </ul>
-                    </button>
-                </div>
+                    </h5> :
+                    <div className="headerRight__loginButton">
+                        <button onClick={() => setOpen(true)}>Login
+            <ul className='login__list'>
+                                <div className="loginList__firstItem">
+                                    <li style={{ color: 'black' }}>New Customer?</li>
+                                    <li> <a href="#1">Signup</a> </li>
+                                </div>
+
+                                <li><a href="/profile">My Profile</a> </li>
+                                <li> <a href="/flipkart_plus"> Flipkart Plus Zone</a></li>
+                                <li> <a href="/orders">Orders</a> </li>
+                                <li> <a href="/wishlist"> Wishilist</a></li>
+                                <li> <a href="/rewards">Rewards</a> </li>
+                                <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/giftcards">Gift Cards</a> </li>
+                            </ul>
+                        </button>
+                    </div>}
+
 
                 <button className='headerRight__moreButton' >More <KeyboardArrowDownIcon />
                     <ul className='moreButton__list'>

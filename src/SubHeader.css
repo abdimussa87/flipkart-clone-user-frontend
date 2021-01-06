@@ -22,6 +22,7 @@
   cursor: pointer;
   padding: 0.4rem 15px;
   font-size: 14px;
+  flex-wrap: wrap;
 }
 
 .subHeader > ul > li > span:hover {

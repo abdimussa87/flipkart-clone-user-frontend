@@ -22,7 +22,7 @@ function SubHeader() {
                 newCategoryList.push(
 
                     <li key={cat.name}> {
-                        cat.parentId ? <a href={cat.slug}> {cat.name} </a> : <span>
+                        cat.parentId ? <a href={`/${cat.slug}?cid=${cat.id}&type=${cat.type}`}> {cat.name} </a> : <span>
                             {cat.name}
                         </span>
                     }

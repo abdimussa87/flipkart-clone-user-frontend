@@ -25,6 +25,16 @@ export const fetchProductsBySlug = createAsyncThunk('product/fetchProductsBySlug
     }
 })
 
+export const fetchProductById = createAsyncThunk('product/fetchProductById', async ({ productId, productSlug }, { rejectWithValue }) => {
+    try {
+        const response = await axios.get(`/products/${productSlug}/${productId}`);
+        const product = response.data;
+        return product;
+    } catch (error) {
+        return rejectWithValue(error.response.data);
+    }
+})
+
 
 export const productSlice = createSlice({
     name: 'product',
@@ -37,6 +47,7 @@ export const productSlice = createSlice({
             under20k: [],
             under30k: []
         },
+        productDetail: {},
         loading: false,
         error: null,
         message: null
@@ -44,18 +55,18 @@ export const productSlice = createSlice({
     reducers: {
     },
     extraReducers: {
-        // [fetchProductsAsync.pending]: (state, action) => {
-        //     state.loading = true;
-        // },
-        // [fetchProductsAsync.fulfilled]: (state, action) => {
-        //     state.products = action.payload;
-        //     state.loading = false;
-        //     state.error = null;
-        // },
-        // [fetchProductsAsync.rejected]: (state, action) => {
-        //     state.loading = false;
-        //     state.error = action.payload;
-        // },
+        [fetchProductById.pending]: (state, action) => {
+            state.loading = true;
+        },
+        [fetchProductById.fulfilled]: (state, action) => {
+            state.productDetail = action.payload;
+            state.loading = false;
+            state.error = null;
+        },
+        [fetchProductById.rejected]: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
         [fetchProductsBySlug.pending]: (state, action) => {
             state.loading = true;
         },

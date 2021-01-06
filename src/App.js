@@ -7,16 +7,20 @@ import HomePage from './HomePage';
 import ProductPageOrProductListPage from './ProductContainer/index';
 import { useEffect } from 'react';
 import { fetchCategoriesAsync } from './features/categorySlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { isUserLoggedIn } from './features/userSlice';
+import ProductDetail from './ProductContainer/ProductDetail';
 
 function App() {
   const dispatch = useDispatch();
-
+  const user = useSelector(state => state.user)
   useEffect(() => {
 
     dispatch(fetchCategoriesAsync({}))
-
-  }, [dispatch])
+    if (!user.authenticated) {
+      dispatch(isUserLoggedIn());
+    }
+  }, [dispatch, user])
   return (
     <div className="app">
       <Router>
@@ -24,6 +28,7 @@ function App() {
         <SubHeader />
         <Switch>
           <Route path='/' exact component={HomePage} />
+          <Route path='/products/:productSlug/:productId/p' component={ProductDetail} />
           <Route path='/:slug' component={ProductPageOrProductListPage} />
 
 

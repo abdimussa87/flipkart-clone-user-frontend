@@ -1,7 +1,10 @@
 import React from 'react'
 import "./ProductRow.css";
 import { Button, Paper } from '@material-ui/core'
-import FavoriteIcon from '@material-ui/icons/Favorite'; function ProductRow({ name, price, products }) {
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { useHistory } from 'react-router-dom';
+
+function ProductRow({ name, price, products }) {
     const generatePrice = () => {
         if (price === 'under5k')
             return 5000;
@@ -15,6 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'; function ProductRow({ na
             return 30000;
     }
 
+    const history = useHistory();
 
     return (
 
@@ -26,7 +30,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'; function ProductRow({ na
                 </div>
                 <div className="productRow__body">
 
-                    {products.map(prod => (<div className='productRow__productInfo' key={prod._id}>
+                    {products.map(prod => (<div className='productRow__productInfo' key={prod._id} onClick={() => history.push(`/products/${prod.slug}/${prod._id}/p`)}>
                         <img src={`http://localhost:8080/public/${prod.productPictures[0].img}`} alt="" />
                         <FavoriteIcon className='productRow__favoriteIcon' />
                         <p>{prod.name}</p>

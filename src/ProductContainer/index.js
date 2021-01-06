@@ -1,23 +1,28 @@
 import React from 'react'
 import ProductPage from './ProductPage';
 import ProductListPage from './ProductListPage'
+import HomePage from '../HomePage';
 function ProductContainer(props) {
-    const { search } = props.location;
-    const value1 = search.split('?')[1];
-    const left = value1.split('&')[0];
-    const right = value1.split('&')[1];
-    let paramsObj = {};
-    paramsObj.cid = left.split('=')[1];
-    paramsObj.type = right.split('=')[1];
+
 
     const renderPage = () => {
+        const { search } = props.location;
+        let paramsObj = {};
+        if (search) {
+            const value1 = search.split('?')[1];
+            const left = value1.split('&')[0];
+            const right = value1.split('&')[1];
+            paramsObj.cid = left.split('=')[1];
+            paramsObj.type = right.split('=')[1];
+        }
+
         switch (paramsObj.type) {
             case "page":
                 return <ProductPage params={paramsObj} />
-            case "Store":
+            case "store":
                 return <ProductListPage {...props} />
             default:
-                return <ProductListPage {...props} />
+                return <HomePage />
         }
     }
 

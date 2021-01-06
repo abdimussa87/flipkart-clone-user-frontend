@@ -203,3 +203,36 @@
 .dialogCloseIcon:hover {
   cursor: pointer;
 }
+
+.user__list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #cecece;
+  left: -48px;
+  right: 0;
+  top: 41px;
+  display: none;
+  z-index: 999;
+  padding: 0px 0;
+  width: 250%;
+}
+.headerRight__user:hover > .user__list {
+  display: block;
+}
+
+.user__list > li {
+  list-style: none;
+  border-bottom: 1px solid lightgray;
+  text-align: left;
+}
+.user__list > li:hover {
+  background-color: #f1f3f6;
+}
+.user__list > li > a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 10px 10px;
+}

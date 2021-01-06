@@ -11,7 +11,19 @@
 .productRow__body {
   display: flex;
   /* justify-content: space-between; */
-  flex-wrap: wrap;
+  overflow-x: scroll;
+  /* flex-wrap: wrap; */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.productRow__body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.productRow__body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 .productRow__productInfo {
   position: relative;
