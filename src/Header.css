@@ -5,6 +5,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 .header__left {
   display: flex;
@@ -67,6 +70,7 @@
   align-items: center;
   margin-right: 15px;
   padding: 10px;
+  font-weight: 600;
 }
 .headerRight__cartButton {
   display: flex;
@@ -74,6 +78,7 @@
   border: none;
   color: white;
   align-items: center;
+  font-weight: 600;
 }
 
 .login__list {

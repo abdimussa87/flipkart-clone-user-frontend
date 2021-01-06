@@ -1,0 +1,104 @@
+.cartPage__leftHeader,
+.cartPriceContainer__header {
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+}
+.cartPage__leftHeader > h4 {
+  font-weight: 400;
+  font-size: 22px;
+}
+.cartProductContainer {
+  display: flex;
+  flex-direction: column;
+}
+.cartProductContainer__top {
+  display: flex;
+  padding: 20px;
+}
+.cartProductContainer__left > img {
+  width: 100%;
+  max-height: 150px;
+  margin-left: 10px;
+  object-fit: contain;
+}
+
+.cartProductDetail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cartProductDetail__rightTop {
+  margin: 0px 20px;
+}
+.cartProductDetail__rightTop > h5 {
+  font-size: 18px;
+  font-weight: 400;
+}
+.cartProductContainer__bottom__quantity {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+.cartProductContainer__bottom__quantity > input {
+  width: 30px;
+  margin: 0 10px;
+}
+.cartProductContainer__bottom__quantity > button {
+  background-color: transparent;
+  border: 1px solid #c2c2c2;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  line-height: 1;
+  padding-top: 1px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+.cartProductContainer__bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-right: auto;
+}
+.cartProductContainer__bottom__buttons {
+  display: flex;
+  justify-content: space-around;
+  flex: 1;
+}
+.cartProductContainer__bottom__buttons > a {
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 20px;
+  color: black;
+}
+.cartProductContainer__bottom__buttons > a:hover {
+  color: #2874f0;
+}
+.cartPriceContainer {
+  display: flex;
+  flex-direction: column;
+}
+.cartPriceContainer__header > h4 {
+  font-weight: 600;
+  font-size: 19px;
+  color: gray;
+}
+.cartPriceContainer__top {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+.cartPriceContainer__left > h4,
+.cartPriceContainer__right > p {
+  padding: 5px 0;
+}
+.cartPriceContainer__bottom {
+  display: flex;
+  padding: 10px;
+  border-top: 1px lightgray dashed;
+  justify-content: space-between;
+}
+.cartPriceContainer__bottom > h3 {
+  font-weight: 600;
+}

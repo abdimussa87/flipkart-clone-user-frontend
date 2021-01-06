@@ -10,6 +10,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import loginImage from './images/login_img_c4a81e.png'
 import CloseIcon from '@material-ui/icons/Close';
 import { loginAsync, logout } from './features/userSlice';
+import { Link } from 'react-router-dom';
 function Header() {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
@@ -117,8 +118,9 @@ function Header() {
     return (
         <div className='header'>
             <div className="header__left">
-
-                <img className="header__logo" src={logo} alt="" />
+                <Link to='/'>
+                    <img className="header__logo" src={logo} alt="" />
+                </Link>
                 <div className="header__search">
                     <input type="text" placeholder='Search for products,brands and more' />
                     <SearchIcon className='headerSearch__searchIcon' />

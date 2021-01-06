@@ -6,6 +6,8 @@
 .productDetail__left {
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 60px;
 }
 .productDetail__leftTop {
   display: flex;
@@ -22,6 +24,9 @@
   object-fit: contain;
   margin-bottom: 2px;
 }
+.productDetail__images > img:hover {
+  cursor: pointer;
+}
 .productDetail__image {
   flex: 1;
 }
@@ -35,4 +40,10 @@
   margin-top: 10px;
   /* justify-content: space-between;
   display: flex; */
+}
+.productDetail__header {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: gray;
 }

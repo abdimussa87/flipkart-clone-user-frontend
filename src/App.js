@@ -10,6 +10,7 @@ import { fetchCategoriesAsync } from './features/categorySlice';
 import { useDispatch, useSelector } from 'react-redux'
 import { isUserLoggedIn } from './features/userSlice';
 import ProductDetail from './ProductContainer/ProductDetail';
+import CartPage from './CartPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
         <Switch>
           <Route path='/' exact component={HomePage} />
           <Route path='/products/:productSlug/:productId/p' component={ProductDetail} />
+          <Route path='/cart' component={CartPage} />
           <Route path='/:slug' component={ProductPageOrProductListPage} />
 
 
