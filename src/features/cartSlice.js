@@ -23,7 +23,26 @@ export const cartSlice = createSlice({
     },
     reducers: {
         addToCart: (state, action) => {
-            state.cart[action.payload.productDetail._id] = action.payload.productDetail
+            let productDetail = action.payload.productDetail;
+            let type = action.payload.type;
+            let originalPrice = action.payload.originalPrice;
+            if (!type) {
+                type = 1;
+            }
+            if (state.cart[productDetail._id]) {
+                productDetail = {
+                    ...productDetail,
+                    price: type === 1 ? productDetail.price + originalPrice : productDetail.price - originalPrice
+                }
+                state.cart[productDetail._id] = { productDetail, qty: state.cart[productDetail._id].qty + type }
+
+            } else {
+                state.cart[productDetail._id] = { productDetail, qty: 1 }
+            }
+
+        }
+        , removeFromCartAction: (state, action) => {
+            delete state.cart[action.payload];
         }
     },
     extraReducers: {
@@ -48,7 +67,7 @@ export const cartSlice = createSlice({
 
 
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCartAction } = cartSlice.actions;
 
 export const selectCart = state => state.cart.cart;
 

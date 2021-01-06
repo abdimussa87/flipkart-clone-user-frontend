@@ -1,23 +1,43 @@
-import { Grid, Paper } from '@material-ui/core'
+import { Button, Grid, Paper } from '@material-ui/core'
 import React from 'react'
 import './CartPage.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart, removeFromCartAction } from './features/cartSlice'
 function CartPage() {
     const cart = useSelector(state => state.cart.cart)
     let totalPrice;
-
+    const dispatch = useDispatch();
     const getTotalPrice = () => {
         totalPrice = 0;
         Object.keys(cart).forEach((key, index) => {
-            totalPrice += cart[key].price;
+            totalPrice += cart[key].productDetail.price;
         })
         return totalPrice;
+    }
+    const products = useSelector(state => state.product.products)
+    const addQuantity = (productDetail) => {
+        const product = products.find(pro => pro._id === productDetail._id);
+        const originalPrice = product.price;
+        dispatch(addToCart({ productDetail, type: 1, originalPrice }))
+    }
+    const subtractQuantity = (productDetail, qty) => {
+        if (qty === 1) {
+            return;
+        }
+        const product = products.find(pro => pro._id === productDetail._id);
+        const originalPrice = product.price;
+        dispatch(addToCart({ productDetail, type: -1, originalPrice }))
+
+    }
+    const removeFromCart = (e, productId) => {
+        e.preventDefault();
+        dispatch(removeFromCartAction(productId))
     }
     return (
         <div className='cartPage'>
             <Grid container >
                 <Grid item xs={12} sm={8} md={8}>
-                    <Paper style={{ margin: '10px' }}>
+                    <Paper style={{ margin: '10px 10px 0px 10px' }}>
                         <div className="cartPage__leftHeader">
                             <h4>My Cart</h4>
                         </div>
@@ -27,15 +47,15 @@ function CartPage() {
                                     <div className="cartProductContainer__top">
 
                                         <div className="cartProductContainer__left">
-                                            <img src={`http://localhost:8080/public/${cart[key].productPictures[0].img}`} alt="" />
+                                            <img src={`http://localhost:8080/public/${cart[key].productDetail.productPictures[0].img}`} alt="" />
                                         </div>
                                         <div className="cartProductDetail">
                                             <div className="cartProductDetail__rightTop">
                                                 <h5>
-                                                    {cart[key].name}
+                                                    {cart[key].productDetail.name}
                                                 </h5>
                                                 <h3>
-                                                    ${cart[key].price}
+                                                    ${cart[key].productDetail.price}
                                                 </h3>
                                             </div>
                                         </div>
@@ -43,19 +63,24 @@ function CartPage() {
 
                                     <div className="cartProductContainer__bottom">
                                         <div className="cartProductContainer__bottom__quantity">
-                                            <button>-</button>
-                                            <input type="text" readOnly />
-                                            <button>+</button>
+                                            <button onClick={() => subtractQuantity(cart[key].productDetail, cart[key].qty)}>-</button>
+                                            <input
+                                                style={{ textAlign: 'center' }}
+                                                type="text"
+                                                value={cart[key].qty}
+                                                readOnly />
+                                            <button onClick={() => addQuantity(cart[key].productDetail)}>+</button>
                                         </div>
                                         <div className="cartProductContainer__bottom__buttons">
                                             <a href="/"> SAVE FOR LATER</a>
-                                            <a href="/"> REMOVE</a>
+                                            <a onClick={(e) => removeFromCart(e, cart[key].productDetail._id)} href='/remove'> REMOVE</a>
                                         </div>
                                     </div>
                                 </div>
 
                             ))
                         }
+
                     </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3}>
@@ -86,7 +111,19 @@ function CartPage() {
                     </div>
                 </Grid>
             </Grid>
-        </div>
+            <div className="cartPage__footer">
+                <Grid container>
+                    <Grid item xs={12} sm={8} md={8}>
+                        <div style={{ height: '60px', backgroundColor: 'white', margin: '0px 10px 10px 10px', boxShadow: '0 -2px 7px lightgray', display: 'flex', flexDirection: 'row-reverse' }}>
+                            <Button style={{ backgroundColor: '#fb641b', color: 'white', fontSize: '12px', fontWeight: '600', width: '25%', height: '40px', margin: '10px 0', marginRight: '20px' }}>
+                                Place Order
+                </Button>
+                        </div>
+
+                    </Grid>
+                </Grid>
+            </div>
+        </div >
     )
 }
 

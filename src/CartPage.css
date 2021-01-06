@@ -78,6 +78,8 @@
 .cartPriceContainer {
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 60px;
 }
 .cartPriceContainer__header > h4 {
   font-weight: 600;
