@@ -31,7 +31,7 @@ function ProductDetail(props) {
 
 
     const handleAddToCart = () => {
-        dispatch(addToCart({ productDetail }));
+        dispatch(addToCart({ productDetail: { ...productDetail, originalPrice: productDetail.price } }));
         history.push('/cart')
     }
 

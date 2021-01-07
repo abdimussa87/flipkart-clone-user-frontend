@@ -24,8 +24,10 @@ export const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             let productDetail = action.payload.productDetail;
+            // type tells whether its an addition or subtraction
             let type = action.payload.type;
-            let originalPrice = action.payload.originalPrice;
+            let originalPrice = productDetail.originalPrice;
+            // if type is null default to adding
             if (!type) {
                 type = 1;
             }
@@ -35,14 +37,22 @@ export const cartSlice = createSlice({
                     price: type === 1 ? productDetail.price + originalPrice : productDetail.price - originalPrice
                 }
                 state.cart[productDetail._id] = { productDetail, qty: state.cart[productDetail._id].qty + type }
-
+                localStorage.setItem('cart', JSON.stringify(state.cart));
             } else {
                 state.cart[productDetail._id] = { productDetail, qty: 1 }
+                localStorage.setItem('cart', JSON.stringify(state.cart));
             }
 
         }
         , removeFromCartAction: (state, action) => {
             delete state.cart[action.payload];
+            localStorage.setItem('cart', JSON.stringify(state.cart));
+        },
+        loadToCart: (state, action) => {
+            const cartFromStorage = JSON.parse(localStorage.getItem('cart'));
+            if (cartFromStorage) {
+                state.cart = cartFromStorage;
+            }
         }
     },
     extraReducers: {
@@ -67,7 +77,7 @@ export const cartSlice = createSlice({
 
 
 
-export const { addToCart, removeFromCartAction } = cartSlice.actions;
+export const { addToCart, removeFromCartAction, loadToCart } = cartSlice.actions;
 
 export const selectCart = state => state.cart.cart;
 

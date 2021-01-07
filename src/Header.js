@@ -10,14 +10,14 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import loginImage from './images/login_img_c4a81e.png'
 import CloseIcon from '@material-ui/icons/Close';
 import { loginAsync, logout } from './features/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 function Header() {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
-
+    const history = useHistory();
     useEffect(() => {
         if (user.authenticated) {
             setOpen(false);
@@ -179,7 +179,7 @@ function Header() {
                         <li><a href="/downloadApp">Download App</a></li>
                     </ul>
                 </button>
-                <button className='headerRight__cartButton'><ShoppingCartIcon /> Cart</button>
+                <button onClick={() => history.push('/cart')} className='headerRight__cartButton'><ShoppingCartIcon /> Cart</button>
             </div>
             {renderLoginModal()}
         </div>

@@ -7,6 +7,7 @@ function CartPage() {
     const cart = useSelector(state => state.cart.cart)
     let totalPrice;
     const dispatch = useDispatch();
+
     const getTotalPrice = () => {
         totalPrice = 0;
         Object.keys(cart).forEach((key, index) => {
@@ -14,21 +15,19 @@ function CartPage() {
         })
         return totalPrice;
     }
-    const products = useSelector(state => state.product.products)
+
     const addQuantity = (productDetail) => {
-        const product = products.find(pro => pro._id === productDetail._id);
-        const originalPrice = product.price;
-        dispatch(addToCart({ productDetail, type: 1, originalPrice }))
+        dispatch(addToCart({ productDetail, type: 1 }))
     }
+
     const subtractQuantity = (productDetail, qty) => {
         if (qty === 1) {
             return;
         }
-        const product = products.find(pro => pro._id === productDetail._id);
-        const originalPrice = product.price;
-        dispatch(addToCart({ productDetail, type: -1, originalPrice }))
+        dispatch(addToCart({ productDetail, type: -1 }))
 
     }
+
     const removeFromCart = (e, productId) => {
         e.preventDefault();
         dispatch(removeFromCartAction(productId))
@@ -36,7 +35,8 @@ function CartPage() {
     return (
         <div className='cartPage'>
             <Grid container >
-                <Grid item xs={12} sm={8} md={8}>
+                <Grid item xs={0} sm={0} md={1}></Grid>
+                <Grid item xs={12} sm={8} md={7}>
                     <Paper style={{ margin: '10px 10px 0px 10px' }}>
                         <div className="cartPage__leftHeader">
                             <h4>My Cart</h4>

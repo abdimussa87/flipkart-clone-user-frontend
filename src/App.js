@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { fetchCategoriesAsync } from './features/categorySlice';
 import { useDispatch, useSelector } from 'react-redux'
 import { isUserLoggedIn } from './features/userSlice';
+import { loadToCart } from './features/cartSlice';
 import ProductDetail from './ProductContainer/ProductDetail';
 import CartPage from './CartPage';
 
@@ -21,7 +22,11 @@ function App() {
     if (!user.authenticated) {
       dispatch(isUserLoggedIn());
     }
+
   }, [dispatch, user])
+  useEffect(() => {
+    dispatch(loadToCart());
+  }, [dispatch])
   return (
     <div className="app">
       <Router>
