@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { fetchCategoriesAsync } from './features/categorySlice';
 import { useDispatch, useSelector } from 'react-redux'
 import { isUserLoggedIn } from './features/userSlice';
-import { loadToCart } from './features/cartSlice';
+import { fetchCartAsync, loadToCart, updateCartAsync } from './features/cartSlice';
 import ProductDetail from './ProductContainer/ProductDetail';
 import CartPage from './CartPage';
 
@@ -25,8 +25,14 @@ function App() {
 
   }, [dispatch, user])
   useEffect(() => {
-    dispatch(loadToCart());
-  }, [dispatch])
+    if (!user.authenticated) {
+      dispatch(loadToCart());
+    } else {
+      dispatch(updateCartAsync({}))
+      dispatch(fetchCartAsync({}));
+
+    }
+  }, [dispatch, user])
   return (
     <div className="app">
       <Router>

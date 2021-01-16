@@ -1,12 +1,22 @@
 import { Button, Grid, Paper } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './CartPage.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { addToCart, removeFromCartAction } from './features/cartSlice'
+import { addToCart, addToCartAsync, fetchCartAsync, removeFromCartAction, removeFromCartAsync } from './features/cartSlice'
 function CartPage() {
     const cart = useSelector(state => state.cart.cart)
+    const user = useSelector(state => state.user)
+
     let totalPrice;
     const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     if (user.authenticated) {
+    //         dispatch(fetchCartAsync({}));
+    //     }
+    // }, [user.authenticated, dispatch])
+
+
 
     const getTotalPrice = () => {
         totalPrice = 0;
@@ -17,25 +27,36 @@ function CartPage() {
     }
 
     const addQuantity = (productDetail) => {
-        dispatch(addToCart({ productDetail, type: 1 }))
+        if (user.authenticated) {
+            dispatch(addToCartAsync({ productDetail, type: 1 }))
+        } else {
+            dispatch(addToCart({ productDetail, type: 1 }))
+        }
     }
 
     const subtractQuantity = (productDetail, qty) => {
         if (qty === 1) {
             return;
         }
-        dispatch(addToCart({ productDetail, type: -1 }))
-
+        if (user.authenticated) {
+            dispatch(addToCartAsync({ productDetail, type: -1 }))
+        } else {
+            dispatch(addToCart({ productDetail, type: -1 }))
+        }
     }
 
     const removeFromCart = (e, productId) => {
         e.preventDefault();
-        dispatch(removeFromCartAction(productId))
+        if (user.authenticated) {
+            dispatch(removeFromCartAsync(productId))
+        } else {
+            dispatch(removeFromCartAction(productId))
+        }
     }
     return (
         <div className='cartPage'>
             <Grid container >
-                <Grid item xs={0} sm={0} md={1}></Grid>
+                <Grid item md={1}></Grid>
                 <Grid item xs={12} sm={8} md={7}>
                     <Paper style={{ margin: '10px 10px 0px 10px' }}>
                         <div className="cartPage__leftHeader">
@@ -63,11 +84,11 @@ function CartPage() {
 
                                     <div className="cartProductContainer__bottom">
                                         <div className="cartProductContainer__bottom__quantity">
-                                            <button onClick={() => subtractQuantity(cart[key].productDetail, cart[key].qty)}>-</button>
+                                            <button onClick={() => subtractQuantity(cart[key].productDetail, cart[key].quantity)}>-</button>
                                             <input
                                                 style={{ textAlign: 'center' }}
                                                 type="text"
-                                                value={cart[key].qty}
+                                                value={cart[key].quantity}
                                                 readOnly />
                                             <button onClick={() => addQuantity(cart[key].productDetail)}>+</button>
                                         </div>

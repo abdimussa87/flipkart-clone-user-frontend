@@ -7,12 +7,13 @@ import { Button } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import { useHistory } from 'react-router-dom';
-import { addToCart } from '../features/cartSlice';
+import { addToCart, addToCartAsync } from '../features/cartSlice';
 
 function ProductDetail(props) {
     const { productId } = props.match.params;
     const { productSlug } = props.match.params;
     const productDetail = useSelector(state => state.product.productDetail);
+    const user = useSelector(state => state.user)
 
     const [selectedImage, setSelectedImage] = useState();
     const history = useHistory();
@@ -31,7 +32,12 @@ function ProductDetail(props) {
 
 
     const handleAddToCart = () => {
-        dispatch(addToCart({ productDetail: { ...productDetail, originalPrice: productDetail.price } }));
+        if (!user.authenticated) {
+
+            dispatch(addToCart({ productDetail: { ...productDetail, originalPrice: productDetail.price } }));
+        } else {
+            dispatch(addToCartAsync({ productDetail: { ...productDetail, originalPrice: productDetail.price } }))
+        }
         history.push('/cart')
     }
 

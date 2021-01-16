@@ -10,6 +10,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import loginImage from './images/login_img_c4a81e.png'
 import CloseIcon from '@material-ui/icons/Close';
 import { loginAsync, logout } from './features/userSlice';
+import { clearCart } from './features/cartSlice';
+
 import { Link, useHistory } from 'react-router-dom';
 function Header() {
     const [open, setOpen] = useState(false);
@@ -147,6 +149,7 @@ function Header() {
                             <li> <a href="/giftcards">Gift Cards</a> </li>
                             <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/" onClick={(e) => {
                                 e.preventDefault();
+                                dispatch(clearCart())
                                 dispatch(logout())
                             }} >Logout</a> </li>
                         </ul>
