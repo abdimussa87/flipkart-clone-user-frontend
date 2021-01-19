@@ -28,6 +28,7 @@ export const signUpAsync = createAsyncThunk('user/singnUpAsync', async ({ firstN
     })
     if (response.status === 201) {
       const { message } = response.data;
+
       return { message };
     }
 

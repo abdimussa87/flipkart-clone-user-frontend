@@ -47,10 +47,10 @@
   height: 56px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .headerRight__loginButton > button {
-  position: relative;
   color: #2874f0;
   background-color: white;
   font-weight: 600;
@@ -88,7 +88,7 @@
   border: 1px solid #cecece;
   left: -48px;
   right: 0;
-  top: 35px;
+  top: 50px;
   display: none;
   z-index: 999;
   padding: 10px 0;
@@ -121,7 +121,7 @@
   padding: 10px 10px;
 }
 
-.headerRight__loginButton:hover > button > .login__list {
+.headerRight__loginButton:hover > button + .login__list {
   display: block;
 }
 
@@ -199,6 +199,14 @@
 }
 .dialogRight__top {
   padding-top: 20px;
+}
+.dialogRight__top > center > p {
+  color: gray;
+}
+.dialogRight__bottom,
+a {
+  text-decoration: none;
+  color: #2874f0;
 }
 .dialogCloseIcon {
   position: absolute;

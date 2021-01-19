@@ -9,13 +9,17 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import loginImage from './images/login_img_c4a81e.png'
 import CloseIcon from '@material-ui/icons/Close';
-import { loginAsync, logout } from './features/userSlice';
+import { loginAsync, logout, signUpAsync } from './features/userSlice';
 import { clearCart } from './features/cartSlice';
 
 import { Link, useHistory } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 function Header() {
     const [open, setOpen] = useState(false);
+    const [openSignupModal, setOpenSignupModal] = useState(false);
     const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
@@ -23,14 +27,41 @@ function Header() {
     useEffect(() => {
         if (user.authenticated) {
             setOpen(false);
+            setOpenSignupModal(false);
         }
     }, [user.authenticated])
 
 
     const handleClose = () => {
         setOpen(false);
+        setOpenSignupModal(false);
     };
 
+    const handleSignup = () => {
+        if (firstName.trim().length === 0) {
+            alert('Please enter first name')
+        }
+        else if (lastName.trim().length === 0) {
+            alert('Please enter last name')
+        }
+        else if (email.trim().length === 0) {
+            alert('Please enter email')
+        }
+        else if (password.trim().length === 0) {
+            alert('Please enter password')
+        } else {
+            dispatch(signUpAsync({ firstName, lastName, email, password }))
+                .then(unwrapResult)
+                .then(result => {
+                    dispatch(loginAsync({ email, password }))
+                    setEmail('')
+                    setPassword('')
+                    setFirstName('')
+                    setLastName('')
+                })
+                .catch(rejectedValue => { })
+        }
+    }
 
     const handleLogin = () => {
         if (email.trim().length === 0) {
@@ -41,6 +72,94 @@ function Header() {
         } else {
             dispatch(loginAsync({ email, password }))
         }
+    }
+
+    const renderSignupModal = () => {
+        return <Dialog open={openSignupModal} onClose={handleClose} aria-labelledby="form-dialog-title">
+
+            <DialogContent style={{ padding: '0', height: '500px' }}>
+                <div className="loginDialog">
+                    <div className="dialogLeft">
+                        <div className="dialogLeftTop">
+                            <div className="dialogTitle">
+                                Signup
+            </div>
+                            <div className="dialogSubTitle">
+                                Get access to your Orders,Wishilist and Recommendations
+            </div>
+
+                        </div>
+                        <img src={loginImage} alt="" />
+                    </div>
+                    <div className="dialogRight">
+                        <div className="dialogRight__top">
+                            {user.error?.message && <p style={{ color: 'red' }}>{user.error.message}</p>}
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                id="firstName"
+                                placeholder='First Name'
+                                type="text"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                fullWidth
+                            />
+                            <TextField
+                                margin="dense"
+                                id="lastName"
+                                placeholder='Last Name'
+                                type="text"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                fullWidth
+                            />
+                            <TextField
+                                margin="dense"
+                                id="email"
+                                placeholder='Enter email/Enter Mobile Number'
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                fullWidth
+                            />
+                            <TextField
+                                margin="dense"
+                                id="password"
+                                placeholder='Enter Password'
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                fullWidth
+                            />
+                            <Button onClick={handleSignup} style={{
+                                width: '100%',
+                                color: "white",
+                                backgroundColor: '#fb641b',
+                                marginTop: '5px',
+                                marginBottom: '10px'
+                            }}>
+                                Signup
+                    </Button>
+                            <center>
+                                <p>OR</p>
+                            </center>
+                            <Button style={{
+                                width: '100%',
+                                color: "#2874f0",
+                                backgroundColor: 'white',
+                                boxShadow: '0px 3px 3px lightgray',
+                                marginTop: '10px'
+                            }} onClick={() => { setOpenSignupModal(false); setOpen(true) }}>Existing User? Log in</Button>
+                        </div>
+                    </div>
+                    <CloseIcon onClick={() => {
+                        setOpenSignupModal(false)
+                    }} className='dialogCloseIcon' />
+                </div>
+
+            </DialogContent>
+
+        </Dialog>
     }
 
 
@@ -105,7 +224,11 @@ function Header() {
                         </div>
                         <div className="dialogRight__bottom">
                             <center>
-                                <a href="/signup">New to Flipkart? Create an account</a>
+                                <Link to="/signup" onClick={(e) => {
+                                    e.preventDefault();
+                                    setOpen(false);
+                                    setOpenSignupModal(true)
+                                }}>New to Flipkart? Create an account</Link>
                             </center>
                         </div>
                     </div>
@@ -155,21 +278,24 @@ function Header() {
                         </ul>
                     </h5> :
                     <div className="headerRight__loginButton">
-                        <button onClick={() => setOpen(true)}>Login
-            <ul className='login__list'>
-                                <div className="loginList__firstItem">
-                                    <li style={{ color: 'black' }}>New Customer?</li>
-                                    <li> <a href="#1">Signup</a> </li>
-                                </div>
+                        <button onClick={() => setOpen(true)}>Login </button>
+                        <ul className='login__list'>
+                            <div className="loginList__firstItem">
+                                <li style={{ color: 'black' }}>New Customer?</li>
+                                <li> <Link to="/signup" onClick={(e) => {
+                                    e.preventDefault();
+                                    setOpen(false);
+                                    setOpenSignupModal(true)
+                                }}>Signup</Link> </li>
+                            </div>
 
-                                <li><a href="/profile">My Profile</a> </li>
-                                <li> <a href="/flipkart_plus"> Flipkart Plus Zone</a></li>
-                                <li> <a href="/orders">Orders</a> </li>
-                                <li> <a href="/wishlist"> Wishilist</a></li>
-                                <li> <a href="/rewards">Rewards</a> </li>
-                                <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/giftcards">Gift Cards</a> </li>
-                            </ul>
-                        </button>
+                            <li><a href="/profile">My Profile</a> </li>
+                            <li> <a href="/flipkart_plus"> Flipkart Plus Zone</a></li>
+                            <li> <a href="/orders">Orders</a> </li>
+                            <li> <a href="/wishlist"> Wishilist</a></li>
+                            <li> <a href="/rewards">Rewards</a> </li>
+                            <li style={{ borderBottom: 'none', paddingBottom: '0px' }}> <a href="/giftcards">Gift Cards</a> </li>
+                        </ul>
                     </div>}
 
 
@@ -185,6 +311,8 @@ function Header() {
                 <button onClick={() => history.push('/cart')} className='headerRight__cartButton'><ShoppingCartIcon /> Cart</button>
             </div>
             {renderLoginModal()}
+            {renderSignupModal()}
+
         </div>
     )
 }
